@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lab_05_login_start/welcome.dart';
-import 'welcome.dart';
+import 'package:flutter_lab_05_login_start/login.dart';
+import 'login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatelessWidget {
@@ -18,7 +18,7 @@ class Home extends StatelessWidget {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (context) => Welcome(),
+        builder: (context) => Login(),
       ),
       (route) => false,
     );

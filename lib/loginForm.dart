@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter_lab_05_login_start/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,7 +11,10 @@ class _LoginFormState extends State<LoginForm> {
   String errmsg = "";
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _emailController = TextEditingController();
+  TextEditingController _fnameController = TextEditingController();
+  TextEditingController _lnameController = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
+  TextEditingController _postalController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   void login() {
@@ -22,48 +24,117 @@ class _LoginFormState extends State<LoginForm> {
     errmsg = "";
     if (passValidate) {
       if (_passwordController.text == 'x') {
-        saveUser();
-        //_emailController.dispose();
+        // confirmOr();
+        //_fnameController.dispose();
         //_passwordController.dispose();
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                Home(_emailController.text, _passwordController.text),
+            builder: (context) => Home(_fnameController.text,
+                _lnameController.text, _addressController.text),
           ),
         );
       }
     } else {
-      errmsg = "Wrong password!!";
+      errmsg = "Please fill out all information!!";
     }
   }
 
-  void saveUser() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("user", _emailController.text);
-    prefs.setString("password", _passwordController.text);
-  }
+  // void confirmOr() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setString("First Name", _fnameController.text);
+  //   prefs.setString("password", _passwordController.text);
+  // }
 
-  TextFormField getEmail() {
+  TextFormField getFname() {
     return TextFormField(
-      controller: _emailController,
-      validator: (String inputEmail) {
-        if (inputEmail.isEmpty) {
-          return "Please input email";
+      controller: _fnameController,
+      validator: (String inputFname) {
+        if (inputFname.isEmpty) {
+          return "Please input First Name";
         } else {
-          if (!EmailValidator.validate(inputEmail)) {
-            return "Plese input valid email address";
-          }
           return null;
         }
       },
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.name,
       decoration: InputDecoration(
-        labelText: "Email",
-        hintText: "Enter your email",
+        labelText: "First Name *",
+        hintText: "Enter your First Name",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: Icon(
-          Icons.email,
+          Icons.account_circle,
+          color: Colors.grey[700],
+          size: 20.0,
+        ),
+      ),
+    );
+  }
+
+  TextFormField getLname() {
+    return TextFormField(
+      controller: _lnameController,
+      validator: (String inputLname) {
+        if (inputLname.isEmpty) {
+          return "Please input Last Name";
+        } else {
+          return null;
+        }
+      },
+      keyboardType: TextInputType.name,
+      decoration: InputDecoration(
+        labelText: "Last Name *",
+        hintText: "Enter your Last Name",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: Icon(
+          Icons.account_circle,
+          color: Colors.grey[700],
+          size: 20.0,
+        ),
+      ),
+    );
+  }
+
+  TextFormField getAdr() {
+    return TextFormField(
+      controller: _addressController,
+      validator: (String inputAdr) {
+        if (inputAdr.isEmpty) {
+          return "Please input Address";
+        } else {
+          return null;
+        }
+      },
+      keyboardType: TextInputType.streetAddress,
+      decoration: InputDecoration(
+        labelText: "Address *",
+        hintText: "Enter your Address",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: Icon(
+          Icons.location_on,
+          color: Colors.grey[700],
+          size: 20.0,
+        ),
+      ),
+    );
+  }
+
+  TextFormField getPost() {
+    return TextFormField(
+      controller: _postalController,
+      validator: (String inputPost) {
+        if (inputPost.isEmpty) {
+          return "Please input postal";
+        } else {
+          return null;
+        }
+      },
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        labelText: "Postal *",
+        hintText: "Enter your postal",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: Icon(
+          Icons.location_on,
           color: Colors.grey[700],
           size: 20.0,
         ),
@@ -97,7 +168,7 @@ class _LoginFormState extends State<LoginForm> {
 
   SizedBox getLoginBt() {
     return SizedBox(
-      width: double.infinity,
+      width: 200,
       height: 50,
       child: RaisedButton(
         color: Colors.grey,
@@ -106,7 +177,7 @@ class _LoginFormState extends State<LoginForm> {
           side: BorderSide(color: Colors.white),
         ),
         child: Text(
-          "Login",
+          "Confirm",
           textAlign: TextAlign.center,
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -128,7 +199,16 @@ class _LoginFormState extends State<LoginForm> {
         child: Column(
           children: [
             //---Email---
-            getEmail(),
+            getFname(),
+            SizedBox(height: 10),
+
+            getLname(),
+            SizedBox(height: 10),
+
+            getAdr(),
+            SizedBox(height: 10),
+
+            getPost(),
             SizedBox(height: 10),
 
             //---Password---

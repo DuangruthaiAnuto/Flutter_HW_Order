@@ -7,7 +7,7 @@ class Login extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey[700],
-        title: Text("ComSci Project"),
+        title: Text("Shipping information"),
       ),
       body: Container(
         width: double.infinity,
@@ -18,7 +18,7 @@ class Login extends StatelessWidget {
               children: [
                 SizedBox(height: 100),
                 Text(
-                  "Welcome to \nComSci Flutter Project",
+                  "Welcome to \nArrange delivery",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,
@@ -27,7 +27,7 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Please log in with email from Songkhla Rajabhat Universicty (@parichat.skru.ac.th or @skru.ac.th)",
+                  "Please fill in the form of product delivery.(* required)",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 30),

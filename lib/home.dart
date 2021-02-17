@@ -5,15 +5,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatelessWidget {
   //Add Logout Button, Function and variable
-  final String email;
-  final String password;
+  final String fname;
+  final String lname;
+  final String address;
 
-  Home(this.email, this.password);
+  Home(this.fname, this.lname, this.address);
 
   void logout(context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("user", null);
-    prefs.setString("password", null);
+    prefs.setString("lname", null);
 
     Navigator.pushAndRemoveUntil(
       context,
@@ -43,7 +44,7 @@ class Home extends StatelessWidget {
               style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
             ),
             Text(
-              "Your email: $email\n Your password: $password", //Place Code Here
+              "Your name: $fname  $lname \n$address", //Place Code Here
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),

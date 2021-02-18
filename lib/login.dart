@@ -6,7 +6,7 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueGrey[700],
+        backgroundColor: Colors.teal[700],
         title: Text("Shipping information"),
       ),
       body: Container(
@@ -16,7 +16,7 @@ class Login extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 100),
+                SizedBox(height: 50),
                 Text(
                   "Welcome to \nArrange delivery",
                   textAlign: TextAlign.center,
@@ -27,7 +27,7 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Please fill in the form of product delivery.(* required)",
+                  "Please fill in the form of product delivery.",
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 30),

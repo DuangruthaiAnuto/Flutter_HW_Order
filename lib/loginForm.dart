@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lab_05_login_start/home.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -15,7 +15,8 @@ class _LoginFormState extends State<LoginForm> {
   TextEditingController _lnameController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
   TextEditingController _postalController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _redateController = TextEditingController();
 
   void login() {
     //Code for Login
@@ -23,20 +24,18 @@ class _LoginFormState extends State<LoginForm> {
     bool passValidate = _formKey.currentState.validate();
     errmsg = "";
     if (passValidate) {
-      if (_passwordController.text == 'x') {
-        // confirmOr();
-        //_fnameController.dispose();
-        //_passwordController.dispose();
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Home(_fnameController.text,
-                _lnameController.text, _addressController.text),
-          ),
-        );
-      }
-    } else {
-      errmsg = "Please fill out all information!!";
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Home(
+              _fnameController.text,
+              _lnameController.text,
+              _addressController.text,
+              _postalController.text,
+              _phoneController.text,
+              _redateController.text),
+        ),
+      );
     }
   }
 
@@ -58,12 +57,12 @@ class _LoginFormState extends State<LoginForm> {
       },
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
-        labelText: "First Name *",
+        labelText: "First Name",
         hintText: "Enter your First Name",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: Icon(
           Icons.account_circle,
-          color: Colors.grey[700],
+          color: Colors.teal[700],
           size: 20.0,
         ),
       ),
@@ -82,12 +81,12 @@ class _LoginFormState extends State<LoginForm> {
       },
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
-        labelText: "Last Name *",
+        labelText: "Last Name",
         hintText: "Enter your Last Name",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: Icon(
           Icons.account_circle,
-          color: Colors.grey[700],
+          color: Colors.teal[700],
           size: 20.0,
         ),
       ),
@@ -106,12 +105,12 @@ class _LoginFormState extends State<LoginForm> {
       },
       keyboardType: TextInputType.streetAddress,
       decoration: InputDecoration(
-        labelText: "Address *",
+        labelText: "Address",
         hintText: "Enter your Address",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: Icon(
           Icons.location_on,
-          color: Colors.grey[700],
+          color: Colors.teal[700],
           size: 20.0,
         ),
       ),
@@ -128,38 +127,64 @@ class _LoginFormState extends State<LoginForm> {
           return null;
         }
       },
+      maxLength: 5,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        labelText: "Postal *",
+        labelText: "Postal",
         hintText: "Enter your postal",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: Icon(
           Icons.location_on,
-          color: Colors.grey[700],
+          color: Colors.teal[700],
           size: 20.0,
         ),
       ),
     );
   }
 
-  TextFormField getPass() {
+  TextFormField getPhonenumber() {
     return TextFormField(
-      controller: _passwordController,
-      validator: (String inputPassword) {
-        if (inputPassword.isEmpty) {
-          return "Please input Password";
+      controller: _phoneController,
+      validator: (String inputPhone) {
+        if (inputPhone.isEmpty) {
+          return "Please input Phone Number";
         } else {
           return null;
         }
       },
-      obscureText: true,
+      maxLength: 10,
+      keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        labelText: "Password",
-        hintText: "Enter your password",
+        labelText: "Phone Number",
+        hintText: "Enter your Phone Number",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: Icon(
-          Icons.lock,
-          color: Colors.grey[700],
+          Icons.stay_current_portrait,
+          color: Colors.teal[700],
+          size: 20.0,
+        ),
+      ),
+    );
+  }
+
+  TextFormField getRecieveDate() {
+    return TextFormField(
+      controller: _redateController,
+      validator: (String inputRdate) {
+        if (inputRdate.isEmpty) {
+          return "Please input RecieveDate";
+        } else {
+          return null;
+        }
+      },
+      keyboardType: TextInputType.datetime,
+      decoration: InputDecoration(
+        labelText: "RecieveDate",
+        hintText: "DD/MM/YY",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: Icon(
+          Icons.insert_invitation,
+          color: Colors.teal[700],
           size: 20.0,
         ),
       ),
@@ -171,7 +196,7 @@ class _LoginFormState extends State<LoginForm> {
       width: 200,
       height: 50,
       child: RaisedButton(
-        color: Colors.grey,
+        color: Colors.teal,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
           side: BorderSide(color: Colors.white),
@@ -182,6 +207,7 @@ class _LoginFormState extends State<LoginForm> {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 23,
+            color: Colors.white,
           ),
         ),
         onPressed: login,
@@ -211,9 +237,12 @@ class _LoginFormState extends State<LoginForm> {
             getPost(),
             SizedBox(height: 10),
 
-            //---Password---
-            getPass(),
-            SizedBox(height: 20),
+            getPhonenumber(),
+            SizedBox(height: 10),
+
+            getRecieveDate(),
+            SizedBox(height: 10),
+
             //Raised Button
             getLoginBt(),
             SizedBox(height: 15),
